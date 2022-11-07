@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: "some_doku_instance_name"
+    build: .
+    #ports:
+    #  - 8080:80 # debug only
+    volumes:
+      - export:/ssg # direct access to ssg export volume
+      - appvol:/app # to make app persistent
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.docker.network=traefik_default" # maybe needs to be changed, based on docker environment
+      - "traefik.http.routers.some_doku_instance_name.rule=Host(`projects.v2.hfg.design`) && PathPrefix(`/some_doku_instance_name`)"
+      - "traefik.http.services.some_doku_instance_name.loadbalancer.server.port=80"
+      - "traefik.http.services.some_doku_instance_name.loadbalancer.server.scheme=http"
+    environment:
+      OAUTH_CLIENT_ID: abc #changeme
+      OAUTH_REDIRECT_URI: def #changeme
+    networks:
+        - traefik_default
+
+networks:
+  traefik_default:
+    external: true
+
+volumes:
+  appvol:
+  export:
+    driver_opts:
+      type: "nfs"
+      o: "addr=172.17.113.30,nolock,soft,rw"
+      device: ":/mnt/pool-kitt/outsourced-services/projects-static-www"
