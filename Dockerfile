@@ -8,9 +8,9 @@ RUN find /app -type f -exec chmod 644 {} +
 RUN mkdir /ssg
 
 # mac M1 build fix (dev only! not necessary on native linux)
-RUN wget -O "/usr/local/bin/go-replace" "https://github.com/webdevops/goreplace/releases/download/1.1.2/gr-arm64-linux" \
-    && chmod +x "/usr/local/bin/go-replace" \
-    && "/usr/local/bin/go-replace" --version
+#RUN wget -O "/usr/local/bin/go-replace" "https://github.com/webdevops/goreplace/releases/download/1.1.2/gr-arm64-linux" \
+#    && chmod +x "/usr/local/bin/go-replace" \
+#    && "/usr/local/bin/go-replace" --version
 
 # Add OAuth Config file and secrets from env vars / deploy
 # note: need to set env vars when deploying!
