@@ -1,7 +1,7 @@
 # Base image
 FROM webdevops/php-apache-dev:7.4
 RUN apt-get update && apt-get install -y git
-RUN git clone --depth 1 https://github.com/hfg-gmuend/hfg-documentation-generator /app
+RUN git clone -b dockerized --depth 1 https://github.com/hfg-gmuend/hfg-documentation-generator /app
 RUN chown -R application:www-data /app
 RUN find /app -type d -exec chmod 755 {} +
 RUN find /app -type f -exec chmod 644 {} +
